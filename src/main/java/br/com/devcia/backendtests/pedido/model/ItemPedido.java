@@ -1,6 +1,6 @@
-package br.com.devcia.backendtests.model;
+package br.com.devcia.backendtests.pedido.model;
 
-import br.com.devcia.backendtests.exception.QuantidadeInvalidaException;
+import br.com.devcia.backendtests.pedido.exception.QuantidadeInvalidaException;
 
 import java.math.BigDecimal;
 

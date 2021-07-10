@@ -1,4 +1,4 @@
-package br.com.devcia.backendtests.model;
+package br.com.devcia.backendtests.pedido.model;
 
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Assertions;

@@ -1,8 +1,7 @@
-package br.com.devcia.backendtests.model;
+package br.com.devcia.backendtests.pedido.model;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 

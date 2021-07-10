@@ -1,7 +1,7 @@
-package br.com.devcia.backendtests.model;
+package br.com.devcia.backendtests.pedido.model;
 
-import br.com.devcia.backendtests.exception.AlteracaoItemPedidoInvalidaException;
-import br.com.devcia.backendtests.exception.QuantidadeInvalidaException;
+import br.com.devcia.backendtests.pedido.exception.AlteracaoItemPedidoInvalidaException;
+import br.com.devcia.backendtests.pedido.exception.QuantidadeInvalidaException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
