@@ -22,6 +22,7 @@ class ItemPedidoParametrizadoTest {
     @MethodSource("parametrosDeItems")
     @DisplayName("Deve retornar o valor total resultado da multiplicação do valor do item pela quantidade")
     public void deveRetornarOValorTotal(final ItemPedido itemPedido, final BigDecimal valorEsperado) {
+        itemPedido.calculaTotal();
         Assertions.assertEquals(valorEsperado, itemPedido.getTotal());
     }
 

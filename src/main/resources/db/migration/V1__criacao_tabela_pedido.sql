@@ -1,0 +1,5 @@
+CREATE TABLE pedido
+(
+    id    BIGSERIAL PRIMARY KEY,
+    total NUMERIC(10,2) NOT NULL
+);

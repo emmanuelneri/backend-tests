@@ -42,6 +42,7 @@ class ItemPedidoDinamicoTest {
     private Executable executarTeste(final BigDecimal valor, final int quantidade, BigDecimal valorEsperado) {
         return () -> {
             final ItemPedido itemPedido = new ItemPedido(valor, quantidade);
+            itemPedido.calculaTotal();
             Assertions.assertEquals(valorEsperado, itemPedido.getTotal());
         };
     }
