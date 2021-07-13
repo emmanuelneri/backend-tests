@@ -1,5 +1,6 @@
 package br.com.devcia.backendtests.pedido.controller;
 
+import br.com.devcia.backendtests.cliente.model.Cliente;
 import br.com.devcia.backendtests.pedido.model.ItemPedido;
 import br.com.devcia.backendtests.pedido.model.Pedido;
 import br.com.devcia.backendtests.pedido.service.PedidoService;
@@ -27,11 +28,19 @@ class PedidoControllerTest {
 
     @Test
     public void deveReceberSolicitacaoParaRealizarPedido() throws Exception {
+        final Cliente cliente = new Cliente();
+        cliente.setId(1L);
+        cliente.setNome("Cliente");
+        cliente.setDocumento("373.115.180-40");
+
         final ItemPedido itemPedido = new ItemPedido();
         itemPedido.setValor(BigDecimal.TEN);
         itemPedido.setQuantidade(2);
+        itemPedido.setDescricao("Produto X");
+
         final Pedido pedido = new Pedido();
         pedido.setId(1L);
+        pedido.setCliente(cliente);
         pedido.setItens(Collections.singletonList(itemPedido));
         pedido.calculaTotal();
 
@@ -39,10 +48,10 @@ class PedidoControllerTest {
 
         this.mockMvc.perform(MockMvcRequestBuilders.post("/pedidos")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"itens\":[{\"valor\":100},{\"quantidade\":1}]}"))
+                .content("{\"cliente\":{\"id\":1,\"nome\":\"Cliente\",\"documento\":\"373.115.180-40\"},\"itens\":[{\"id\":null,\"descricao\":\"Produto X\",\"valor\":10,\"quantidade\":2,\"total\":20}],\"total\":20,\"status\":\"ABERTO\"}"))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content()
-                        .string("{\"id\":1,\"itens\":[{\"total\":20}],\"total\":20}"));
+                        .string("{\"id\":1,\"cliente\":{\"id\":1,\"nome\":\"Cliente\",\"documento\":\"373.115.180-40\"},\"itens\":[{\"id\":null,\"descricao\":\"Produto X\",\"valor\":10,\"quantidade\":2,\"total\":20}],\"total\":20,\"status\":\"ABERTO\"}"));
     }
 
 }

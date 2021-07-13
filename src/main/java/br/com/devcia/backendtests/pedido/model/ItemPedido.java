@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
 @Entity
@@ -17,12 +18,16 @@ public class ItemPedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @ManyToOne
-//    @JoinColumn(name = "pedido_id", nullable = false)
-//    private Pedido pedido;
+    @NotNull
+    private String descricao;
 
+    @NotNull
     private BigDecimal valor = BigDecimal.ZERO;
+
+    @NotNull
     private int quantidade;
+
+    @NotNull
     private BigDecimal total = BigDecimal.ZERO;
 
     public ItemPedido() {
@@ -55,6 +60,30 @@ public class ItemPedido {
 
     public void setValor(BigDecimal valor) {
         this.valor = valor;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 
     @Override

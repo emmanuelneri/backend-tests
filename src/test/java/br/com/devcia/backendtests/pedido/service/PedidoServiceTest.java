@@ -1,11 +1,13 @@
 package br.com.devcia.backendtests.pedido.service;
 
+import br.com.devcia.backendtests.cliente.model.Cliente;
+import br.com.devcia.backendtests.cliente.service.ClienteService;
 import br.com.devcia.backendtests.pedido.model.ItemPedido;
 import br.com.devcia.backendtests.pedido.model.Pedido;
 import br.com.devcia.backendtests.pedido.repository.PedidoRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -21,18 +23,30 @@ class PedidoServiceTest {
     @Mock
     private PedidoRepository pedidoRepository;
 
+    @Mock
+    private ClienteService clienteService;
+
     @InjectMocks
     private PedidoService pedidoService;
 
-    @RepeatedTest(5)
+    @Test
     @DisplayName("Deve salvar um novo pedido, calculando valor total dos itens e do pedido")
     public void deveSalvarUmNovoPedido() {
+        final Cliente cliente = new Cliente();
+        cliente.setId(1L);
+        cliente.setNome("João");
+        cliente.setDocumento("958.518.560-17");
+
         final Pedido pedido = new Pedido();
+        pedido.setCliente(cliente);
+
         final ItemPedido itemPedido = new ItemPedido();
         itemPedido.setValor(BigDecimal.TEN);
         itemPedido.setQuantidade(2);
+        itemPedido.setDescricao("Produto X");
         pedido.setItens(Collections.singletonList(itemPedido));
 
+        Mockito.when(clienteService.criarClienteSeNaoExistir(cliente)).thenReturn(cliente);
         Mockito.when(pedidoRepository.save(pedido)).then(invocationOnMock -> {
             final Pedido p = invocationOnMock.getArgument(0);
             p.setId(1L);
