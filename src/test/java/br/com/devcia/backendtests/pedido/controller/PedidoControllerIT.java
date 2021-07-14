@@ -17,10 +17,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -83,6 +85,32 @@ public class PedidoControllerIT {
         Assertions.assertEquals(BigDecimal.TEN, item.valor());
         Assertions.assertEquals(2, item.quantidade());
         Assertions.assertEquals(BigDecimal.valueOf(20), item.total());
+    }
+
+    @Test
+    @DisplayName("deve retornar requisição invalida (HTTP 400) quando enviar um pedido sem cliente")
+    public void deveRetornarRequisicaoInvalidaQuandoEnviarUmPedidoSemCliente() {
+        final CriacaoItemPedidoDTO itemPedido = new CriacaoItemPedidoDTO("Produto", BigDecimal.ONE, 1);
+        final CriacaoPedidoDTO pedido = new CriacaoPedidoDTO(null, Collections.singletonList(itemPedido));
+
+        final HttpClientErrorException.BadRequest exception = Assertions.assertThrows(HttpClientErrorException.BadRequest.class,
+                () -> this.restTemplate.postForEntity("/pedidos", new HttpEntity<>(pedido, this.headers), Object.class));
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+        Assertions.assertEquals("400 : [{\"mensagem\":\"salvar.pedido.cliente: Cliente não deve ser nulo\"}]", exception.getMessage());
+    }
+
+    @Test
+    @DisplayName("deve retornar requisição invalida (HTTP 400) quando enviar um pedido sem item")
+    public void deveRetornarRequisicaoInvalidaQuandoEnviarUmPedidoSemItem() {
+        final ClienteDTO cliente = new ClienteDTO(null, "Cliente", "373.115.180-40");
+        final CriacaoPedidoDTO pedido = new CriacaoPedidoDTO(cliente, null);
+
+        final HttpClientErrorException.BadRequest exception = Assertions.assertThrows(HttpClientErrorException.BadRequest.class,
+                () -> this.restTemplate.postForEntity("/pedidos", new HttpEntity<>(pedido, this.headers), Object.class));
+
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, exception.getStatusCode());
+        Assertions.assertEquals("400 : [{\"mensagem\":\"salvar.pedido.itens: O pedido deve conter pelo menos um item\"}]", exception.getMessage());
     }
 
 }
