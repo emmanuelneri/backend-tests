@@ -17,7 +17,6 @@
         <spring-boot.version>2.5.2</spring-boot.version>
         <flywaydb.version>7.11.1</flywaydb.version>
         <postgresql-driver.version>42.2.23</postgresql-driver.version>
-        <mapstruct.version>1.4.2.Final</mapstruct.version>
         <surefire-plugin.version>2.22.2</surefire-plugin.version>
         <javafaker.version>1.0.2</javafaker.version>
         <testcontainers.version>1.15.3</testcontainers.version>
@@ -50,12 +49,6 @@
             <artifactId>postgresql</artifactId>
             <version>${postgresql-driver.version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <version>${mapstruct.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -114,22 +107,6 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>${maven.compiler.source}</source>
-                    <target>${maven.compiler.target}</target>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.mapstruct</groupId>
-                            <artifactId>mapstruct-processor</artifactId>
-                            <version>${mapstruct.version}</version>
-                        </path>
-                    </annotationProcessorPaths>
-                </configuration>
             </plugin>
         </plugins>
     </build>

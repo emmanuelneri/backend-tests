@@ -1,0 +1,14 @@
+{
+  "cliente":{
+    "nome":"Cliente",
+    "documento":"373.115.180-40"
+  },
+  "itens":[
+    {
+      "descricao":"Produto X",
+      "valor":10,
+      "quantidade":2,
+      "total":20
+    }
+  ]
+}

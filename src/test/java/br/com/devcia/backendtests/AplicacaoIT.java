@@ -28,10 +28,10 @@ class AplicacaoIT {
         final String url = String.format("http://localhost:%d/actuator/health", port);
 
         final RestTemplate restTemplate = restTemplateBuilder.build();
-        final ResponseEntity<Health> responseEntity = restTemplate.getForEntity(url, Health.class);
-        Assertions.assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        final ResponseEntity<Health> resposta = restTemplate.getForEntity(url, Health.class);
+        Assertions.assertEquals(HttpStatus.OK, resposta.getStatusCode());
 
-        final Health health = responseEntity.getBody();
+        final Health health = resposta.getBody();
         Assertions.assertNotNull(health);
         Assertions.assertEquals(Status.UP, health.status());
     }

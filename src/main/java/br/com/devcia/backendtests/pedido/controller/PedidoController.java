@@ -18,8 +18,9 @@ public class PedidoController {
     }
 
     @PostMapping
-    public Pedido salvar(@RequestBody final CriarPedidoDTO pedido) {
-        return this.pedidoService.salvar(CriarPedidoDTO.converter(pedido));
+    public PedidoDTO salvar(@RequestBody final CriacaoPedidoDTO criarPedido) {
+        final Pedido pedido = this.pedidoService.salvar(CriacaoPedidoDTO.converter(criarPedido));
+        return PedidoDTO.converter(pedido);
     }
 
 }
