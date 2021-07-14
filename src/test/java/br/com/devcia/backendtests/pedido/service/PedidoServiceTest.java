@@ -32,19 +32,8 @@ class PedidoServiceTest {
     @Test
     @DisplayName("Deve salvar um novo pedido, calculando valor total dos itens e do pedido")
     public void deveSalvarUmNovoPedido() {
-        final Cliente cliente = new Cliente();
-        cliente.setId(1L);
-        cliente.setNome("João");
-        cliente.setDocumento("958.518.560-17");
-
-        final Pedido pedido = new Pedido();
-        pedido.setCliente(cliente);
-
-        final ItemPedido itemPedido = new ItemPedido();
-        itemPedido.setValor(BigDecimal.TEN);
-        itemPedido.setQuantidade(2);
-        itemPedido.setDescricao("Produto X");
-        pedido.setItens(Collections.singletonList(itemPedido));
+        final Cliente cliente = criaCliente();
+        final Pedido pedido = criaPedido(cliente);
 
         Mockito.when(clienteService.criarClienteSeNaoExistir(cliente)).thenReturn(cliente);
         Mockito.when(pedidoRepository.save(pedido)).then(invocationOnMock -> {
@@ -57,6 +46,42 @@ class PedidoServiceTest {
         Assertions.assertEquals(1, pedidoSalvo.getItens().size());
         Assertions.assertEquals(BigDecimal.valueOf(20), pedidoSalvo.getTotal());
         Assertions.assertNotNull(pedidoSalvo.getId());
+    }
+
+    @Test
+    @DisplayName("Deveria falhar por salvar um pedido sem cliente, porém é executado porque a validação está 'mockada'")
+    public void deveriaFalharPoremPassa() {
+        final Pedido pedido = criaPedido(null);
+        Mockito.when(pedidoRepository.save(pedido)).then(invocationOnMock -> {
+            final Pedido p = invocationOnMock.getArgument(0);
+            p.setId(1L);
+            return p;
+        });
+
+        final Pedido pedidoSalvo = this.pedidoService.salvar(pedido);
+        Assertions.assertEquals(1, pedidoSalvo.getItens().size());
+        Assertions.assertEquals(BigDecimal.valueOf(20), pedidoSalvo.getTotal());
+        Assertions.assertNotNull(pedidoSalvo.getId());
+    }
+
+    private Cliente criaCliente() {
+        final Cliente cliente = new Cliente();
+        cliente.setId(1L);
+        cliente.setNome("João");
+        cliente.setDocumento("958.518.560-17");
+        return cliente;
+    }
+
+    private Pedido criaPedido(final Cliente cliente) {
+        final Pedido pedido = new Pedido();
+        pedido.setCliente(cliente);
+
+        final ItemPedido itemPedido = new ItemPedido();
+        itemPedido.setValor(BigDecimal.TEN);
+        itemPedido.setQuantidade(2);
+        itemPedido.setDescricao("Produto X");
+        pedido.setItens(Collections.singletonList(itemPedido));
+        return pedido;
     }
 
 }
