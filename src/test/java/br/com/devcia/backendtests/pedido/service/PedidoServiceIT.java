@@ -55,10 +55,23 @@ class PedidoServiceIT {
     @Test
     @DisplayName("Deve salvar um novo pedido também criando um novo cliente")
     public void deveSalvarUmNovoPedido() {
+        final Cliente cliente = criaCliente();
+        final Pedido pedido = criaPedido(cliente);
+
+        final Pedido pedidoSalvo = this.pedidoService.salvar(pedido);
+        Assertions.assertEquals(1, pedidoSalvo.getItens().size());
+        Assertions.assertEquals(BigDecimal.valueOf(20), pedidoSalvo.getTotal());
+        Assertions.assertNotNull(pedidoSalvo.getId());
+    }
+
+    private Cliente criaCliente() {
         final Cliente cliente = new Cliente();
         cliente.setNome("João");
         cliente.setDocumento("958.518.560-17");
+        return cliente;
+    }
 
+    private Pedido criaPedido(final Cliente cliente) {
         final Pedido pedido = new Pedido();
         pedido.setCliente(cliente);
 
@@ -67,11 +80,7 @@ class PedidoServiceIT {
         itemPedido.setQuantidade(2);
         itemPedido.setDescricao("Produto X");
         pedido.setItens(Collections.singletonList(itemPedido));
-
-        final Pedido pedidoSalvo = this.pedidoService.salvar(pedido);
-        Assertions.assertEquals(1, pedidoSalvo.getItens().size());
-        Assertions.assertEquals(BigDecimal.valueOf(20), pedidoSalvo.getTotal());
-        Assertions.assertNotNull(pedidoSalvo.getId());
+        return pedido;
     }
 
 }

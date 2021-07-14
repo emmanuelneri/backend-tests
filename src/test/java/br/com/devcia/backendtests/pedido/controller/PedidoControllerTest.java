@@ -28,11 +28,28 @@ class PedidoControllerTest {
 
     @Test
     public void deveReceberSolicitacaoParaRealizarPedido() throws Exception {
+        final Cliente cliente = criaCliente();
+        final Pedido pedido = criaPedido(cliente);
+
+        Mockito.when(service.salvar(Mockito.any(Pedido.class))).thenReturn(pedido);
+
+        this.mockMvc.perform(MockMvcRequestBuilders.post("/pedidos")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"cliente\":{\"id\":1,\"nome\":\"Cliente\",\"documento\":\"373.115.180-40\"},\"itens\":[{\"id\":null,\"descricao\":\"Produto X\",\"valor\":10,\"quantidade\":2,\"total\":20}],\"total\":20,\"status\":\"ABERTO\"}"))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content()
+                        .string("{\"id\":1,\"cliente\":{\"id\":1,\"nome\":\"Cliente\",\"documento\":\"373.115.180-40\"},\"itens\":[{\"id\":null,\"descricao\":\"Produto X\",\"valor\":10,\"quantidade\":2,\"total\":20}],\"total\":20,\"status\":\"ABERTO\"}"));
+    }
+
+    private Cliente criaCliente() {
         final Cliente cliente = new Cliente();
         cliente.setId(1L);
         cliente.setNome("Cliente");
         cliente.setDocumento("373.115.180-40");
+        return cliente;
+    }
 
+    private Pedido criaPedido(final Cliente cliente) {
         final ItemPedido itemPedido = new ItemPedido();
         itemPedido.setValor(BigDecimal.TEN);
         itemPedido.setQuantidade(2);
@@ -43,15 +60,7 @@ class PedidoControllerTest {
         pedido.setCliente(cliente);
         pedido.setItens(Collections.singletonList(itemPedido));
         pedido.calculaTotal();
-
-        Mockito.when(service.salvar(Mockito.any(Pedido.class))).thenReturn(pedido);
-
-        this.mockMvc.perform(MockMvcRequestBuilders.post("/pedidos")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"cliente\":{\"id\":1,\"nome\":\"Cliente\",\"documento\":\"373.115.180-40\"},\"itens\":[{\"id\":null,\"descricao\":\"Produto X\",\"valor\":10,\"quantidade\":2,\"total\":20}],\"total\":20,\"status\":\"ABERTO\"}"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content()
-                        .string("{\"id\":1,\"cliente\":{\"id\":1,\"nome\":\"Cliente\",\"documento\":\"373.115.180-40\"},\"itens\":[{\"id\":null,\"descricao\":\"Produto X\",\"valor\":10,\"quantidade\":2,\"total\":20}],\"total\":20,\"status\":\"ABERTO\"}"));
+        return pedido;
     }
 
 }
