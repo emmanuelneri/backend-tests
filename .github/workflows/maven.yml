@@ -62,7 +62,7 @@ jobs:
       - name: Integration Tests
         run: mvn test -Pintegration-test
   packaged-integration-test:
-    name: 'Testes de Integração na Imagem Docker'
+    name: 'Testes na Imagem Docker'
     runs-on: ubuntu-latest
     needs: compile
     steps:
