@@ -18,7 +18,7 @@ import java.util.Collections;
 @SpringBootTest
 @TestPropertySource(
         locations = "classpath:application-embeddeddb.yml")
-public class PedidoServiceIT {
+class PedidoServiceIT {
 
     private static final Faker FAKER = new Faker();
 

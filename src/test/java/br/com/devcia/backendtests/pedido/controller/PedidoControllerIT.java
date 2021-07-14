@@ -28,7 +28,7 @@ import java.util.Objects;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(initializers = {PostgresContainerInitializer.class})
-public class PedidoControllerIT {
+class PedidoControllerIT {
 
     @LocalServerPort
     int port;

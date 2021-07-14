@@ -1,0 +1,9 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://postgres:5432/backendtestsdocker"
+    username: postgres
+    password: postgres
+  jpa:
+    show-sql: true
+server:
+  port: 8090
