@@ -79,4 +79,4 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Packaged Integration Tests
-        run: mvn test -Ppackaged-integration-test
+        run: mvn verify -Ppackaged-integration-test
