@@ -4,10 +4,19 @@
 
 Talk sobre testes no backend - #DevCia
 
+### Pré requisitos
+- Docker
+- Java 16+
+- Maven 3+
 
-Para rodar os testes de integração: `mvn clean install -Pintegration-test`
+### Execução dos testes
+- Para execução dos testes unitários: `mvn clean test`
+- Para execução dos testes de integração: `mvn clean test -Pintegration-test`
+- Para execução dos testes na imagem Docker: `mvn clean verify packaged-integration-test`
 
-Para rodar a aplicação é necessário ter um serviço do Potgres em execução ou executar iniciar o Docker abaixo:
+### Execução da aplicação
+
+A aplicação tem dependência do Postgres, com isso o comando abaixo pode ser utilizado para inicializar o Postgres no Docker.
 ```
 docker run -it \
     -e POSTGRES_DB=backendtests \
@@ -16,3 +25,5 @@ docker run -it \
     -p 5432:5432 \
    postgres:13-alpine
 ```
+
+E executar o comando seguinte para inicializar a aplicação: `mvn spring-boot:run`.
