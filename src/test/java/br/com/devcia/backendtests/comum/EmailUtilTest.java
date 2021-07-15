@@ -6,13 +6,13 @@ import org.junit.jupiter.api.Test;
 
 class EmailUtilTest {
 
-    @Test()
+    @Test
     @DisplayName("Deve retornar valido para emails com um @ e final .com")
     public void deveRetornarEmailValidoComApenasUmArrobaEFinalCom() {
         Assertions.assertTrue(EmailUtil.validarEmail("email@email.com"));
     }
 
-    @Test()
+    @Test
     @DisplayName("Deve retornar valido para emails com um @ e final .com.br")
     public void deveRetornarEmailValidoComApenasUmArrobaEFinalComBr() {
         Assertions.assertTrue(EmailUtil.validarEmail("email@email.com.br"));
