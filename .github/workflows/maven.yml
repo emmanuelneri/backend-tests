@@ -22,7 +22,7 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
       - name: Build
-        run: mvn compile
+        run: mvn clean compile
   unit-test:
     name: 'Testes Unitários'
     runs-on: ubuntu-latest
@@ -34,14 +34,8 @@ jobs:
         with:
           java-version: '16'
           distribution: 'adopt'
-      - name: Cache Maven packages
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
       - name: Unit Tests
-        run: mvn test
+        run: mvn clean test
   integration-test:
     name: 'Testes de Integração'
     runs-on: ubuntu-latest
@@ -53,14 +47,8 @@ jobs:
         with:
           java-version: '16'
           distribution: 'adopt'
-      - name: Cache Maven packages
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
       - name: Integration Tests
-        run: mvn test -Pintegration-test
+        run: mvn clean test -Pintegration-test
   packaged-integration-test:
     name: 'Testes na Imagem Docker'
     runs-on: ubuntu-latest
@@ -72,11 +60,5 @@ jobs:
         with:
           java-version: '16'
           distribution: 'adopt'
-      - name: Cache Maven packages
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: ${{ runner.os }}-m2
       - name: Packaged Integration Tests
-        run: mvn verify -Ppackaged-integration-test
+        run: mvn clean verify -Ppackaged-integration-test
