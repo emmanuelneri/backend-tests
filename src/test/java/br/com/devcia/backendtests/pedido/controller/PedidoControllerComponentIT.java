@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 import java.util.Collections;
 
 @WebMvcTest(PedidoController.class)
-class PedidoControllerTest {
+class PedidoControllerComponentIT {
 
     @Autowired
     private MockMvc mockMvc;
