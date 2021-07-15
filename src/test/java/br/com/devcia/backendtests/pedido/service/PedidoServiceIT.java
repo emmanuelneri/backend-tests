@@ -33,9 +33,10 @@ class PedidoServiceIT {
         itemPedido.setValor(BigDecimal.TEN);
         itemPedido.setQuantidade(2);
         pedido.setItens(Collections.singletonList(itemPedido));
-        Assertions.assertThrows(ConstraintViolationException.class,
-                () -> this.pedidoService.salvar(pedido));
 
+        final ConstraintViolationException constraintViolationException = Assertions.assertThrows(ConstraintViolationException.class,
+                () -> this.pedidoService.salvar(pedido));
+        Assertions.assertEquals("salvar.pedido.cliente: Cliente não deve ser nulo", constraintViolationException.getMessage());
     }
 
     @Test
@@ -48,8 +49,9 @@ class PedidoServiceIT {
         final Pedido pedido = new Pedido();
         pedido.setCliente(cliente);
 
-        Assertions.assertThrows(ConstraintViolationException.class,
+        final ConstraintViolationException constraintViolationException = Assertions.assertThrows(ConstraintViolationException.class,
                 () -> this.pedidoService.salvar(pedido));
+        Assertions.assertEquals("salvar.pedido.itens: O pedido deve conter pelo menos um item", constraintViolationException.getMessage());
     }
 
     @Test

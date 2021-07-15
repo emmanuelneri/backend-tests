@@ -30,7 +30,7 @@ public class Pedido {
     private Cliente cliente;
 
     @NotNull(message = "O pedido deve conter pelo menos um item")
-    @Size(min =  1)
+    @Size(min =  1, message = "O pedido deve conter pelo menos um item")
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "pedido_id", nullable = false)
     private List<ItemPedido> itens = new ArrayList<>();
