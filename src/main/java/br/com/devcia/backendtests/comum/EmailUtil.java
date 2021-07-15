@@ -2,9 +2,9 @@ package br.com.devcia.backendtests.comum;
 
 import java.util.regex.Pattern;
 
-public final class Email {
+public final class EmailUtil {
 
-    private Email() {
+    private EmailUtil() {
     }
 
     // RFC822
