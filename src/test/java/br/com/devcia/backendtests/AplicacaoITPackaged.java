@@ -16,14 +16,14 @@ import java.io.File;
 @Testcontainers
 class AplicacaoITPackaged {
 
-    private static final int APP_PORT = 8090;
-    private static final int POSTGRES_PORT = 5432;
+    private static final int PORTA_APP = 8090;
+    private static final int PORTA_POSTGRES = 5432;
 
     public static DockerComposeContainer environment =
             new DockerComposeContainer(new File("docker-compose.yml"))
                     .withBuild(true)
-                    .withExposedService("app_1", APP_PORT, Wait.forListeningPort())
-                    .withExposedService("postgres_1", POSTGRES_PORT, Wait.forListeningPort());
+                    .withExposedService("app_1", PORTA_APP, Wait.forListeningPort())
+                    .withExposedService("postgres_1", PORTA_POSTGRES, Wait.forListeningPort());
 
     @BeforeEach
     public void setUp() {
@@ -31,8 +31,8 @@ class AplicacaoITPackaged {
     }
 
     @Test
-    void deveRetornarAplicacaoHealthAposInicializacao() {
-        final String url = String.format("http://localhost:%d/actuator/health", APP_PORT);
+    void deveRetornarAplicacaoSaudavelAposInicializacao() {
+        final String url = String.format("http://localhost:%d/actuator/health", PORTA_APP);
 
         final RestTemplate restTemplate = new RestTemplate();
         final ResponseEntity<Health> resposta = restTemplate.getForEntity(url, Health.class);
